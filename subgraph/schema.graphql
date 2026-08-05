@@ -1,0 +1,29 @@
+type Proposal @entity(immutable: false) {
+  id: ID!
+  proposer: Bytes!
+  title: String
+  description: String
+  startBlock: BigInt!
+  endBlock: BigInt!
+  state: String!
+  votesFor: BigInt!
+  votesAgainst: BigInt!
+  votesAbstain: BigInt!
+  createdAt: BigInt!
+  votes: [Vote!]! @derivedFrom(field: "proposal")
+}
+
+type Vote @entity(immutable: false) {
+  id: ID!
+  proposal: Proposal!
+  voter: Bytes!
+  support: Int!
+  weight: BigInt!
+  reason: String
+}
+
+type Delegate @entity(immutable: true) {
+  id: ID!
+  votingPower: BigInt!
+  delegatorCount: Int!
+}
