@@ -1,0 +1,17 @@
+{
+  "name": "dao-governance",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "contracts",
+    "web",
+    "api",
+    "subgraph"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=web",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  }
+}
