@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 const BRANCH = process.env.AUTO_BRANCH || 'master';
 const DEBOUNCE_MS = Number(process.env.AUTO_DEBOUNCE_MS || 5000);
-const IGNORE = new Set(['.git', 'node_modules', 'dist', 'build', '.next', 'out', 'cache']);
+const IGNORE = new Set(['.git', 'node_modules', 'dist', 'build', '.next', 'out', 'cache', 'auto-commit.log']);
 let timer = null;
 let pending = new Set();
 
