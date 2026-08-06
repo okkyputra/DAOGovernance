@@ -44,7 +44,7 @@ cd contracts && forge test
 ## Phase status
 
 - [x] Phase 0 — monorepo setup, Foundry, Next.js, API, subgraph scaffolding
-- [ ] Phase 1 — smart contracts
+- [x] Phase 1 — smart contracts (GovToken, Governor, Timelock, Treasury, 12 tests passing, deploy script)
 - [ ] Phase 2 — indexing
 - [ ] Phase 3 — backend/API
 - [ ] Phase 4 — frontend core

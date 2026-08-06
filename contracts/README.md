@@ -1,66 +1,39 @@
-## Foundry
+# DAO Governance Contracts
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+GovToken, Governor, TimelockController, and Treasury — OpenZeppelin v5 Governor framework, built with Foundry.
 
-Foundry consists of:
+## Contracts
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+| Contract | Purpose |
+| --- | --- |
+| `src/GovToken.sol` | ERC20Votes governance token (GOV), 100M max supply minted to treasury |
+| `src/Governor.sol` | OZ Governor: GovernorSettings + GovernorCountingSimple + GovernorVotes + GovernorVotesQuorumFraction + GovernorTimelockControl |
+| `src/Treasury.sol` | Vault owned by the Timelock; only the Timelock can move funds |
+| (OZ) `TimelockController` | Enforces 2-day delay between passing and execution; Guardian holds CANCELLER_ROLE for emergency cancel |
 
-## Documentation
-
-https://book.getfoundry.sh/
+Defaults: voting delay 1 day, voting period 7 days, proposal threshold 100,000 GOV, quorum 4% of supply, timelock delay 2 days.
 
 ## Usage
 
-### Build
-
-```shell
-$ forge build
+```bash
+forge build
+forge test
 ```
 
-### Test
+## Deploy
 
-```shell
-$ forge test
+Set env vars (see `.env.example`), then:
+
+```bash
+source .env
+forge script script/DeployDAO.s.sol:DeployDAO --rpc-url $RPC_SEPOLIA_URL --broadcast --verify
 ```
 
-### Format
+Post-deploy addresses are printed by the script. Verify on Etherscan with `--verify`.
 
-```shell
-$ forge fmt
-```
+## Architecture
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- Tokens are minted to the Treasury at deployment.
+- The Governor is granted PROPOSER and CANCELLER roles on the Timelock.
+- The Guardian address gets CANCELLER_ROLE to emergency-cancel queued proposals.
+- Treasury funds move only via `TimelockController.execute` -> passed proposals.
