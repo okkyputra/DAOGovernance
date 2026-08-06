@@ -22,7 +22,7 @@ type Vote @entity(immutable: false) {
   reason: String
 }
 
-type Delegate @entity(immutable: true) {
+type Delegate @entity(immutable: false) {
   id: ID!
   votingPower: BigInt!
   delegatorCount: Int!

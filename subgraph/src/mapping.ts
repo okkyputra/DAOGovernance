@@ -6,7 +6,21 @@ import {
   ProposalQueued,
   ProposalExecuted,
 } from "../generated/Governor/Governor";
-import { Proposal, Vote } from "../generated/schema";
+import {
+  DelegateChanged,
+  DelegateVotesChanged,
+} from "../generated/GovToken/GovToken";
+import { Proposal, Vote, Delegate } from "../generated/schema";
+
+function loadDelegate(address: string): Delegate {
+  let delegate = Delegate.load(address);
+  if (delegate == null) {
+    delegate = new Delegate(address);
+    delegate.votingPower = BigInt.fromI32(0);
+    delegate.delegatorCount = 0;
+  }
+  return delegate;
+}
 
 function loadProposal(id: BigInt): Proposal {
   let proposal = Proposal.load(id.toString());
@@ -22,8 +36,8 @@ function loadProposal(id: BigInt): Proposal {
 export function handleProposalCreated(event: ProposalCreated): void {
   let proposal = loadProposal(event.params.proposalId);
   proposal.proposer = event.params.proposer;
-  proposal.startBlock = event.params.startBlock;
-  proposal.endBlock = event.params.endBlock;
+  proposal.startBlock = event.params.voteStart;
+  proposal.endBlock = event.params.voteEnd;
   proposal.state = "Pending";
   proposal.createdAt = event.block.timestamp;
   proposal.description = event.params.description;
@@ -68,4 +82,27 @@ export function handleProposalExecuted(event: ProposalExecuted): void {
   let proposal = loadProposal(event.params.proposalId);
   proposal.state = "Executed";
   proposal.save();
+}
+
+export function handleDelegateChanged(event: DelegateChanged): void {
+  let delegator = event.params.delegator.toHex();
+  let fromDelegate = event.params.fromDelegate.toHex();
+  let toDelegate = event.params.toDelegate.toHex();
+
+  if (fromDelegate != delegator) {
+    let from = loadDelegate(fromDelegate);
+    from.delegatorCount -= 1;
+    from.save();
+  }
+  if (toDelegate != delegator) {
+    let to = loadDelegate(toDelegate);
+    to.delegatorCount += 1;
+    to.save();
+  }
+}
+
+export function handleDelegateVotesChanged(event: DelegateVotesChanged): void {
+  let delegate = loadDelegate(event.params.delegate.toHex());
+  delegate.votingPower = event.params.newVotes;
+  delegate.save();
 }
