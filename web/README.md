@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Web — DAO Governance frontend
 
-## Getting Started
+Next.js 16 (App Router) + TypeScript + Tailwind + wagmi/viem + RainbowKit + TanStack Query. Dark theme.
 
-First, run the development server:
+## Pages
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Dashboard — voting power, proposal stats, recent proposals |
+| `/proposals` | Proposal list, filterable by state (Pending/Active/Succeeded/…) |
+| `/proposals/:id` | Proposal detail — vote tally, description, vote panel (For/Against/Abstain tx) |
+| `/proposals/new` | Create proposal wizard (Phase 5) |
+| `/delegates` | Delegate leaderboard — voting power, delegators, "Delegate to this address" tx |
+| `/treasury` | Treasury dashboard (Phase 6) |
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # fill in addresses + subgraph URL
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Env vars (`web/.env.local`)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Var | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_CHAIN_ID` | 11155111 (Sepolia) |
+| `NEXT_PUBLIC_GOVERNOR_ADDRESS` | Governor contract |
+| `NEXT_PUBLIC_GOVTOKEN_ADDRESS` | GovToken contract |
+| `NEXT_PUBLIC_TIMELOCK_ADDRESS` | TimelockController |
+| `NEXT_PUBLIC_TREASURY_ADDRESS` | Treasury |
+| `NEXT_PUBLIC_SUBGRAPH_URL` | Deployed subgraph endpoint |
+| `NEXT_PUBLIC_API_URL` | Off-chain API (comments etc.) |
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | WalletConnect Cloud project ID |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Until contracts are deployed to Sepolia and the subgraph is published, pages show configured empty/notice states. Contract ABIs live in `src/lib/abis.ts` (subset for read/write used here).
