@@ -24,8 +24,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const { userAddress, type, proposalId } = req.body ?? {};
-  if (typeof userAddress !== "string" || typeof type !== "string") {
-    return res.status(400).json({ error: "userAddress and type (strings) required" });
+  if (typeof userAddress !== "string" || userAddress.length === 0 || userAddress.length > 128) {
+    return res.status(400).json({ error: "userAddress (string, <=128 chars) required" });
+  }
+  if (typeof type !== "string" || type.length === 0 || type.length > 64) {
+    return res.status(400).json({ error: "type (string, <=64 chars) required" });
   }
   try {
     const rows = await db

@@ -50,6 +50,6 @@ cd contracts && forge test
 - [x] Phase 4 — frontend core (wallet connect, voting power, dashboard, proposal list/detail, delegates)
 - [x] Phase 5 — frontend interaction (create-proposal wizard w/ IPFS pinning, vote casting, delegation, comments)
 - [x] Phase 6 — treasury & analytics (balances, outflow tracking via subgraph targets/values, pass rate, top delegates)
-- [ ] Phase 7 — hardening
+- [x] Phase 7 — hardening (manual security review, error boundaries, API rate-limit + validation, CI workflow)
 - [ ] Phase 7 — hardening
 - [ ] Phase 8 — post-launch

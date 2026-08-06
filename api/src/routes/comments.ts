@@ -22,8 +22,14 @@ router.get("/:proposalId", async (req, res) => {
 router.post("/:proposalId", async (req, res) => {
   const proposalId = Number(req.params.proposalId);
   const { author, body } = req.body ?? {};
-  if (typeof author !== "string" || author.trim() === "" || typeof body !== "string" || body.trim() === "") {
-    return res.status(400).json({ error: "author and body (strings) required" });
+  if (!Number.isInteger(proposalId) || proposalId < 0) {
+    return res.status(400).json({ error: "invalid proposalId" });
+  }
+  if (typeof author !== "string" || author.length === 0 || author.length > 128) {
+    return res.status(400).json({ error: "author (string, <=128 chars) required" });
+  }
+  if (typeof body !== "string" || body.trim().length === 0 || body.length > 2000) {
+    return res.status(400).json({ error: "body (string, <=2000 chars) required" });
   }
   try {
     const rows = await db

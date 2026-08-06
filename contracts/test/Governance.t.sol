@@ -309,6 +309,12 @@ contract GovernanceTest is Test {
         treasury.withdraw(address(0), alice, 1e18);
     }
 
+    function testWithdrawRejectsZeroAddress() public {
+        vm.prank(address(timelock));
+        vm.expectRevert(Treasury.ZeroAddressNotAllowed.selector);
+        treasury.withdraw(address(0), address(0), 1e18);
+    }
+
     function testWithdrawViaProposal() public {
         testFullLifecycle();
     }

@@ -13,6 +13,8 @@ contract Treasury is Ownable {
     event Received(address indexed from, uint256 amount);
     event Withdrawn(address indexed token, address indexed to, uint256 amount);
 
+    error ZeroAddressNotAllowed();
+
     constructor(address owner_) Ownable(owner_) {}
 
     receive() external payable {
@@ -20,6 +22,7 @@ contract Treasury is Ownable {
     }
 
     function withdraw(address token, address to, uint256 amount) external onlyOwner {
+        if (to == address(0)) revert ZeroAddressNotAllowed();
         if (token == address(0)) {
             payable(to).sendValue(amount);
         } else {

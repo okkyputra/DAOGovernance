@@ -3,14 +3,17 @@ import { Header } from "@/components/Header";
 import { ProposalList } from "@/components/ProposalList";
 import { StatCards } from "@/components/StatCards";
 import { NotDeployedNotice } from "@/components/VotingPowerCard";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function Home() {
   return (
     <>
       <Header />
       <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6">
-        <NotDeployedNotice />
-        <StatCards />
+        <ErrorBoundary>
+          <NotDeployedNotice />
+          <StatCards />
+        </ErrorBoundary>
 
         <section className="space-y-4">
           <div className="flex items-center justify-between">
@@ -19,7 +22,9 @@ export default function Home() {
               View all →
             </Link>
           </div>
-          <ProposalList />
+          <ErrorBoundary>
+            <ProposalList />
+          </ErrorBoundary>
         </section>
       </main>
     </>
