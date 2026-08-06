@@ -12,6 +12,7 @@ contracts/out/
 contracts/cache/
 contracts/broadcast/
 contracts/lib/
+api/data/
 subgraph/generated/
 subgraph/build/
 auto-commit.log

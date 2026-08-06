@@ -1,31 +1,24 @@
-import {
-  pgTable,
-  serial,
-  integer,
-  text,
-  timestamp,
-  boolean,
-} from "drizzle-orm/pg-core";
+import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 
-export const proposalsMeta = pgTable("proposals_meta", {
-  id: serial("id").primaryKey(),
+export const proposalsMeta = sqliteTable("proposals_meta", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   proposalId: integer("proposal_id").notNull().unique(),
   ipfsHash: text("ipfs_hash"),
   title: text("title").notNull(),
   summary: text("summary"),
   category: text("category"),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
 });
 
-export const comments = pgTable("comments", {
-  id: serial("id").primaryKey(),
+export const comments = sqliteTable("comments", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   proposalId: integer("proposal_id").notNull(),
   author: text("author").notNull(),
   body: text("body").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
 });
 
-export const delegateProfiles = pgTable("delegate_profiles", {
+export const delegateProfiles = sqliteTable("delegate_profiles", {
   address: text("address").primaryKey(),
   ensName: text("ens_name"),
   bio: text("bio"),
@@ -34,10 +27,11 @@ export const delegateProfiles = pgTable("delegate_profiles", {
   twitter: text("twitter"),
 });
 
-export const notifications = pgTable("notifications", {
-  id: serial("id").primaryKey(),
+export const notifications = sqliteTable("notifications", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   userAddress: text("user_address").notNull(),
   type: text("type").notNull(),
   proposalId: integer("proposal_id"),
-  read: boolean("read").default(false),
+  read: integer("read", { mode: "boolean" }).notNull().default(false),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().$defaultFn(() => new Date()),
 });

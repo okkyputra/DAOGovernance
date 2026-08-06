@@ -9,7 +9,7 @@ A community-owned governance platform for proposals, votes, and treasury — bui
 | `contracts` | GovToken, Governor, TimelockController, Treasury     | Solidity 0.8.x, OpenZeppelin v5, Foundry |
 | `subgraph`  | Indexing of Governor events (proposals, votes)       | The Graph, AssemblyScript               |
 | `web`       | Frontend dashboard and governance UI                 | Next.js App Router, wagmi, RainbowKit   |
-| `api`       | Off-chain backend (comments, delegate profiles, notifications) | Node.js, Express, Drizzle, Postgres |
+| `api`       | Off-chain backend (comments, delegate profiles, notifications) | Node.js, Express, Drizzle, SQLite |
 
 Target chain: **Ethereum Sepolia** (testnet).
 
@@ -46,7 +46,7 @@ cd contracts && forge test
 - [x] Phase 0 — monorepo setup, Foundry, Next.js, API, subgraph scaffolding
 - [x] Phase 1 — smart contracts (GovToken, Governor, Timelock, Treasury, 12 tests passing, deploy script)
 - [x] Phase 2 — indexing (subgraph codegen + build passing; Governor + GovToken data sources)
-- [ ] Phase 3 — backend/API
+- [x] Phase 3 — backend/API (SQLite, proposals/comments/delegates/notifications/IPFS routes, 18 tests)
 - [ ] Phase 4 — frontend core
 - [ ] Phase 5 — frontend interaction
 - [ ] Phase 6 — treasury & analytics
