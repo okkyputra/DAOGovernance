@@ -10,6 +10,8 @@ type Proposal @entity(immutable: false) {
   votesAgainst: BigInt!
   votesAbstain: BigInt!
   createdAt: BigInt!
+  targets: [Bytes!]!
+  values: [BigInt!]!
   votes: [Vote!]! @derivedFrom(field: "proposal")
 }
 

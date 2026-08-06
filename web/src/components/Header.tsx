@@ -17,6 +17,7 @@ export function Header() {
             <Link href="/proposals" className="hover:text-white">Proposals</Link>
             <Link href="/delegates" className="hover:text-white">Delegates</Link>
             <Link href="/treasury" className="hover:text-white">Treasury</Link>
+            <Link href="/analytics" className="hover:text-white">Analytics</Link>
           </nav>
           <ConnectButton showBalance={false} />
         </div>

@@ -11,7 +11,8 @@ Next.js 16 (App Router) + TypeScript + Tailwind + wagmi/viem + RainbowKit + TanS
 | `/proposals/:id` | Proposal detail — vote tally, description, vote panel (For/Against/Abstain tx), discussion comments |
 | `/proposals/new` | Create proposal wizard — action type (treasury transfer / contract call / signal), calldata builder, markdown description, review; pins to IPFS then submits `propose()` |
 | `/delegates` | Delegate leaderboard — voting power, delegators, "Delegate to this address" tx |
-| `/treasury` | Treasury dashboard (Phase 6) |
+| `/treasury` | Treasury dashboard — ETH + GOV balances, total executed outflow, related proposals |
+| `/analytics` | Analytics — pass rate, support breakdown, top delegates |
 
 ## Setup
 

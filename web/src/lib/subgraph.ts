@@ -12,6 +12,8 @@ export interface ProposalEntity {
   votesAgainst: string;
   votesAbstain: string;
   createdAt: string;
+  targets?: string[];
+  values?: string[];
 }
 
 export interface VoteEntity {
@@ -70,6 +72,8 @@ export async function fetchProposals(state?: string, first = 50): Promise<Propos
         votesAgainst
         votesAbstain
         createdAt
+        targets
+        values
       }
     }
   `;

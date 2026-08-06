@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 import {
   ProposalCreated,
   VoteCast,
@@ -41,6 +41,12 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.state = "Pending";
   proposal.createdAt = event.block.timestamp;
   proposal.description = event.params.description;
+  let targets = new Array<Bytes>(event.params.targets.length);
+  for (let i = 0; i < event.params.targets.length; i++) {
+    targets[i] = event.params.targets[i] as Bytes;
+  }
+  proposal.targets = targets;
+  proposal.values = event.params.values;
   proposal.save();
 }
 
