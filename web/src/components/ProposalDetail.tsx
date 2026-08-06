@@ -7,6 +7,7 @@ import { useVotingPower } from "@/hooks/useGovToken";
 import { StateBadge, formatCompact, formatUnitsRaw, shortAddress } from "@/lib/format";
 import { governorAbi } from "@/lib/abis";
 import { config, isZeroAddress } from "@/lib/config";
+import { CommentSection } from "./CommentSection";
 
 const governorAddress = config.governorAddress as `0x${string}`;
 
@@ -73,6 +74,8 @@ export function ProposalDetail() {
             </div>
           </section>
         )}
+
+        <CommentSection proposalId={Number(proposal.id)} />
       </div>
 
       <VotePanel proposalId={proposal.id} state={proposal.state} />

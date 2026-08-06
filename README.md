@@ -48,7 +48,7 @@ cd contracts && forge test
 - [x] Phase 2 — indexing (subgraph codegen + build passing; Governor + GovToken data sources)
 - [x] Phase 3 — backend/API (SQLite, proposals/comments/delegates/notifications/IPFS routes, 18 tests)
 - [x] Phase 4 — frontend core (wallet connect, voting power, dashboard, proposal list/detail, delegates)
-- [ ] Phase 5 — frontend interaction (create-proposal wizard, vote casting, delegation flows)
+- [x] Phase 5 — frontend interaction (create-proposal wizard w/ IPFS pinning, vote casting, delegation, comments)
 - [ ] Phase 6 — treasury & analytics
 - [ ] Phase 7 — hardening
 - [ ] Phase 8 — post-launch
